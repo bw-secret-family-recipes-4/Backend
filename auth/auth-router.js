@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const Users = require('../users/user-model.js');
 const { isValid, signToken } = require('../users/user-service.js');
@@ -8,11 +8,9 @@ router.post('/register', (req, res) => {
     const credentials = req.body
 
     if(isValid(credentials)){
-        const rounds = process.env.BCRYPT_ROUNDS || 8;
-    
-        const hash = bcrypt.hashSync(credentials.password, rounds)
-        credentials.password = hash;
-    
+      const rounds = 8
+      const hash = bcrypt.hashSync(credentials.password, rounds)
+      credentials.password = hash
         Users.add(credentials)
           .then(user => {
             res.status(201).json({ data: user })
