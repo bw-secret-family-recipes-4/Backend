@@ -17,9 +17,6 @@ function findRecipes(){
 
 function findRecipesById(id){
     return db('recipes')
-    .join('ingredients', 'recipes.id', '=', 'ingredients.recipe_id')
-    .join('instructions', 'recipes.id', '=', 'instructions.recipe_id')
-    .select('recipes.title', 'recipes.category', 'recipes.source', 'instructions.steps', 'ingredients.ingredient_name')
     .where({ id }).first();
 }
 

@@ -12,7 +12,7 @@ function getInstructions(){
     return db('instructions')
 }
 
-function getInstructionById(id){
+function findByInstructionId(id){
     return db('instructions').where({ id }).first()
 }
 
