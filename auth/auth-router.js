@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const Users = require('../users/user-model.js');
 const { isValid, signToken } = require('../users/user-service.js');
