@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/recipe/:id', (req, res) => {
     instructions.findInstrutionsByRecipeId(req.params.id)
     .then(recipe => {
         res.status(200).json(recipe)
@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
     })
 })
 
-router.put('/:id', validateRecipeId, (req, res) => {
+router.put('/:id', (req, res) => {
     instructions.editInstruction(req.body, req.params.id)
     .then(step => {
         res.status(200).json(step)
@@ -45,7 +45,7 @@ router.put('/:id', validateRecipeId, (req, res) => {
     })
 })
 
-router.delete('/:id', validateRecipeId, (req, res) => {
+router.delete('/:id', (req, res) => {
     instructions.deleteInstruction(req.params.id)
     .then(recipe => {
         res.status(200).json(recipe)

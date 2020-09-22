@@ -47,14 +47,38 @@ router.get('/users/:userid', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    recipes.addRecipe(req.body)
+    const recipeData = {
+        title: req.body.title,
+        source: req.body.source,
+        category: req.body.category,
+        image_url: req.body.image_url,
+        user_id: req.body.user_id
+        }
+    recipes.addRecipe(recipeData)
     .then(newRecipe => {
-        res.status(201).json(newRecipe)
+        const instructionData = {
+            steps: req.body.steps,
+            recipe_id: newRecipe.id
+        }
+        instructions.addInstruction(instructionData)
+        .then(newInstruction => {
+            const ingredientsData = {
+                ingredient_name: req.body.ingredient_name,
+                recipe_id: newRecipe.id
+            }
+            ingredients.addIngredients(ingredientsData)
+            .then(newIngredient => {
+            res.status(201).json({data: {recipe: newRecipe, instructions: newInstruction, ingredients: newIngredient}})
+            })
+        })
+ 
+
     })
     .catch(err => {
         res.status(500).json({message: err.message })
     })
 })
+
 
 router.put('/:id', validateRecipeId, (req, res) => {
     recipes.updateRecipe(req.body, req.params.id)

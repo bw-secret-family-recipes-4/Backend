@@ -25,14 +25,29 @@ router.get('/:id',(req, res) => {
         res.status(500).json({ message: 'Failed to get ingredient' })
     })
 });
+router.get('/recipes/:id',(req, res) => {
+
+    ingredients.getIngredientByRecipeId(req.params.id)
+    .then(ingr => {
+        res.status(200).json(ingr)
+    })
+    .catch(err => {
+        res.status(500).json({ message: 'Failed to get ingredient' })
+    })
+});
+
 router.post('/', (req, res) => {
-    ingredients.addIngredients(req.body)
+    // const newArray = req.body.ingredient_name.split(' , ')
+    // newArray.forEach(ingr => {
+           ingredients.addIngredients(req.body)
     .then(newIngredient => {
         res.status(201).json(newIngredient)
     })
     .catch(err => {
         res.status(500).json({message: err.message })
-    })
+    }) 
+    //)}
+
 })
 
 router.put('/:id', (req, res) => {
