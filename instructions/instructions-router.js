@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    instructions.findByInstructionId(req.params.id)
+    instructions.findInstrutionsByRecipeId(req.params.id)
     .then(recipe => {
         res.status(200).json(recipe)
     })

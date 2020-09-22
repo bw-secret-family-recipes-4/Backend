@@ -4,8 +4,9 @@ const recipes = require('../recipes/recipe-model')
 const router = express.Router()
 const ingredients = require('../ingredients/ingredients-model')
 
+
 router.get('/', (req, res) => {
-    ingredients.getIngredients
+    ingredients.getIngredients()
     .then(ingr => {
         res.status(200).json(ingr)
     })
@@ -14,7 +15,8 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/:id', validateRecipeId,(req, res) => {
+router.get('/:id',(req, res) => {
+
     ingredients.getIngredientById(req.params.id)
     .then(ingr => {
         res.status(200).json(ingr)
@@ -44,7 +46,7 @@ router.put('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
-    recipes.deleteRecipe(req.params.id)
+    ingredients.deleteIngredients(req.params.id)
     .then(ingredient => {
         res.status(200).json(ingredient)
     })

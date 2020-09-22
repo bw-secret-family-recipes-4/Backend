@@ -5,18 +5,22 @@ module.exports = {
     findByInstructionId,
     addInstruction,
     editInstruction,
-    deleteInstruction
+    deleteInstruction,
+    findInstrutionsByRecipeId
 }
 
 function getInstructions(){
     return db('instructions')
 }
 
+function findInstrutionsByRecipeId(id){
+    return db('instructions').where( {recipe_id: id} )
+}
 function findByInstructionId(id){
-    return db('instructions').where( {id} ).first()
+    return db('instructions').where({id})
 }
 
-function addInstruction(instruction){
+async function addInstruction(instruction){
     return db('instructions')
     .insert(instruction, 'id')
     .then(([id]) => {
@@ -26,7 +30,7 @@ function addInstruction(instruction){
     })
 }
 
-function editInstruction(changes, id){
+async function editInstruction(changes, id){
     return db('instructions')
     .where({ id })
     .update(changes)
