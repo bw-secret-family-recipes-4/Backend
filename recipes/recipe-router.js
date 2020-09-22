@@ -1,7 +1,7 @@
 const express = require('express');
 
 const recipes = require('./recipe-model.js');
-const instructions = require('../instructions/instructions-model')
+
 const ingredients = require('../ingredients/ingredients-model')
 
 const router = express.Router();
@@ -13,6 +13,16 @@ router.get('/', (req, res) => {
     })
     .catch(err => {
         res.status(500).json({ message: 'Failed to get recipes' })
+    })
+});
+
+router.get('/:id', validateRecipeId, (req, res) => {
+    recipes.findRecipesById(req.params.id)
+    .then(recipe => {
+        res.status(200).json(recipe)
+    })
+    .catch(err => {
+        res.status(500).json({ message: 'Failed to get recipe' })
     })
 });
 
@@ -28,6 +38,16 @@ router.post('/', (req, res) => {
 
 router.put('/:id', validateRecipeId, (req, res) => {
     recipes.updateRecipe(req.body, req.params.id)
+    .then(recipe => {
+        res.status(200).json(recipe)
+    })
+    .catch(err => {
+        res.status(500).json({message: err.message})
+    })
+})
+
+router.delete('/:id', validateRecipeId, (req, res) => {
+    recipes.deleteRecipe(req.params.id)
     .then(recipe => {
         res.status(200).json(recipe)
     })

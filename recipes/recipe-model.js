@@ -10,9 +10,9 @@ module.exports = {
 
 function findRecipes(){
     return db('recipes')
-    .join('ingredients', 'recipes.id', '=', 'ingredients.recipe_id')
-    .join('instructions', 'recipes.id', '=', 'instructions.recipe_id')
-    .select('recipes.title', 'recipes.category', 'recipes.source', 'instructions.steps', 'ingredients.ingredient_name')
+    // .join('ingredients', 'recipes.id', '=', 'ingredients.recipe_id')
+    // .join('instructions', 'recipes.id', '=', 'instructions.recipe_id')
+    // .select('recipes.title', 'recipes.category', 'recipes.source', 'instructions.steps', 'ingredients.ingredient_name')
 };
 
 function findRecipesById(id){
@@ -20,7 +20,7 @@ function findRecipesById(id){
     .where({ id }).first();
 }
 
-function addRecipe(recipe){
+async function addRecipe(recipe){
     return db('recipes')
     .insert(recipe)
     .returning("id")
