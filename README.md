@@ -13,6 +13,7 @@
 | GET      | /recipes/:id      |  resolves to the recipe with that id |
 | GET | /recipes/users/:userid      |    resolves to an array of all the recipes for a particular user based on their id |
 | POST       | /recipes | resolves to an array with the newly posted recipe - EXPECTS: title, and user_id, OPTIONAL: source, category, image_url, steps, ingredients |
+| PUT      | /recipes/:id      |  returns the newly edited recipe |
 | DELETE      | /recipes/:id      |  returns the number of deleted recipes - 1 being successful |
 
 # Public Recipes Endpoint
