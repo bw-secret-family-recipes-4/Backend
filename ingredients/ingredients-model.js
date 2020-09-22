@@ -1,22 +1,27 @@
 const db = require('../data/db.config');
+const instruction = require('../instructions/instructions-model')
 
 module.exports = {
     getIngredients,
     getIngredientById,
     addIngredients,
     editIngredients,
-    deleteIngredients
+    deleteIngredients,
+    getIngredientByRecipeId
 }
 
 function getIngredients(){
     return db('ingredients')
 }
 
+function getIngredientByRecipeId(id){
+    return db('ingredients').where({ recipe_id: id })
+}
 function getIngredientById(id){
-    return db('ingredients').where({ id }).first()
+    return db('ingredients').where({ id })
 }
 
-function addIngredients(instruction){
+async function addIngredients(instruction){
     return db('ingredients')
     .insert(instruction, 'id')
     .then(([id]) => {
@@ -26,12 +31,12 @@ function addIngredients(instruction){
     })
 }
 
-function editIngredients(changes, id){
+async function editIngredients(changes, id){
     return db('ingredients')
     .where({ id })
     .update(changes)
     .then(() => {
-        return findByInstructionId(id)
+        return getIngredientById(id)
     })
 }
 
