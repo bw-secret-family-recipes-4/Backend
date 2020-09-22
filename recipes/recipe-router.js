@@ -2,8 +2,6 @@ const express = require('express');
 
 const recipes = require('./recipe-model.js');
 
-const ingredients = require('../ingredients/ingredients-model')
-const instructions = require('../instructions/instructions-model')
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -18,19 +16,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', validateRecipeId, (req, res) => {
-    recipes.findRecipesById(req.params.id)
+    const id = req.params.id
+    recipes.findRecipesById(id).where({id})
     .then(recipe => {
-        ingredients.getIngredientByRecipeId(recipe.id)
-        .then(ing => {
-            const ingredients = ing
-            instructions.findInstrutionsByRecipeId(recipe.id)
-            .then(instr => {
-                const instructions = instr
-                res.status(200).json({data: recipe, ingredients, instructions})
-            })
-            
-        })
-        
+        res.status(200).json(recipe)
     })
     .catch(err => {
         res.status(500).json({ message: 'Failed to get recipes' })
@@ -47,32 +36,9 @@ router.get('/users/:userid', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    const recipeData = {
-        title: req.body.title,
-        source: req.body.source,
-        category: req.body.category,
-        image_url: req.body.image_url,
-        user_id: req.body.user_id
-        }
-    recipes.addRecipe(recipeData)
+    recipes.addRecipe(req.body)
     .then(newRecipe => {
-        const instructionData = {
-            steps: req.body.steps,
-            recipe_id: newRecipe.id
-        }
-        instructions.addInstruction(instructionData)
-        .then(newInstruction => {
-            const ingredientsData = {
-                ingredient_name: req.body.ingredient_name,
-                recipe_id: newRecipe.id
-            }
-            ingredients.addIngredients(ingredientsData)
-            .then(newIngredient => {
-            res.status(201).json({data: {recipe: newRecipe, instructions: newInstruction, ingredients: newIngredient}})
-            })
-        })
- 
-
+        res.status(201).json(newRecipe)
     })
     .catch(err => {
         res.status(500).json({message: err.message })
