@@ -1,7 +1,9 @@
 require('dotenv').config()
+var cors = require('cors')
 
 const express = require('express')
 const helmet = require('helmet')
+
 
 const authRouter = require('../auth/auth-router.js')
 const recipesRouter = require('../recipes/recipe-router.js')
@@ -9,7 +11,7 @@ const ingredientsRouter = require('../ingredients/ingredients_router')
 const instructionsRouter = require('../instructions/instructions-router')
 
 const server = express()
-
+server.use(cors())
 server.use(helmet())
 server.use(express.json())
 
