@@ -22,7 +22,7 @@
 | GET       | /ingredients | returns an array of all the ingredients regardless of recipe |
 | GET      | /ingredients/recipes/:id      |  resolves to an array of all the ingredients for a particular recipe based on the recipe id |
 | GET | /ingredients/:id      |    returns the ingredient with that particular id |
-| POST       | /ingredients | returns the newly posted item, with the id, name, and recipe_id |
+| POST       | /ingredients | returns the newly posted item, with the id, name, and recipe_id, EXPECTS: ingredient_name, and recipe_id |
 | PUT       | /ingredients/:id | returns the newly edited item |
 | DELETE      | /ingredients/:id      |  returns the number of deleted ingredients, 1 is successful, based on the ingredient_id |
 
@@ -31,7 +31,7 @@
 | ------------- |:-------------:| -----:|
 | GET       | /instructions | returns an array of all the instructions regardless of recipe |
 | GET      | /instructions/recipe/:id      |  resolves to an array of all the steps for a particular recipe based on the recipe id |
-| POST       | /instructions | returns the newly posted item, with the id, name, and recipe id |
+| POST       | /instructions | returns the newly posted item, with the id, name, and recipe id, EXPECTS: steps, and recipe_id |
 | PUT       | /instructions/:id | returns the newly edited item based on the instruction id |
 | DELETE      | /ingredients/:id      |  returns the number of deleted instructions, 1 is successful, based on the instruction id |
 
