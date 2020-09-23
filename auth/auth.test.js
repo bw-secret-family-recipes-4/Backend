@@ -16,18 +16,23 @@ describe("auth router", () => {
     })
 
     describe("POST /register", () => {
-        it("should add users", async () => {
+        it("should return a status code of 201", async () => {
             const res = await request(server).post("/auth/register").send({
                 username:"joseph",
                 password:"pass"
             });
-            
             const users = await db("users");
-            expect(users).toHaveLength(1);
             expect(res.status).toBe(201);
         })
-        
-    
+        it("should return the correct data back to us", async () => {
+            await request(server).post("/auth/register").send({
+                username:"joseph",
+                password:"pass"
+            })
+            .then(res => {
+                expect(res.body.data.username).toBe("joseph");
+            })
+        })
         it("should return json", async () => {
             await request(server)
                 .post("/auth/register").send({
@@ -40,7 +45,7 @@ describe("auth router", () => {
         })
     })
     describe("POST /login", () => {
-        it("should return 200", async done => {
+        it("should return 200, and json", async done => {
             await request(server).post("/auth/register").send({
                 username:"jo jo",
                 password:"pass"
@@ -53,6 +58,7 @@ describe("auth router", () => {
                 })
                 .then(res => {
                     expect(res.status).toBe(200);
+                    expect(res.type).toMatch(/json/i)
                     done();
                 });
         })
@@ -74,5 +80,6 @@ describe("auth router", () => {
                     expect(res.body).toMatchObject(expected)
                 })
         })
+       
     })
 })

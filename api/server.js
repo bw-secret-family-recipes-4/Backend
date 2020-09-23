@@ -16,7 +16,7 @@ server.use(helmet())
 server.use(express.json())
 
 server.use('/auth', authRouter)
-server.use('/recipes',restricted, recipesRouter)
+server.use('/recipes', restricted, recipesRouter)
 
 server.use('/public', publicRouter)
 
